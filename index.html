@@ -1,199 +1,125 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<meta name="theme-color" content="#f7e8ee"/>
-<link rel="manifest" href="manifest.json"/>
-<link rel="apple-touch-icon" href="icon-192.png"/>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7e8ee"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png">
 <title>Fitness Journey</title>
 <style>
-:root{
-  --bg:#fffafa; --card:#ffffff; --ink:#2f2a2d; --muted:#8d8186; --line:#efdfe5;
-  --pink:#e7a7bc; --pink-dark:#c97f9a; --pink-soft:#f8e7ed; --danger:#c45c6f;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
-.app{max-width:760px;margin:0 auto;padding:18px 16px 90px}
-.header{display:flex;align-items:center;justify-content:space-between;margin:8px 0 18px}
-h1{font-size:28px;margin:0}.sub{color:var(--muted);font-size:13px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 4px 18px rgba(80,40,55,.04)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{padding:14px;border-radius:16px;background:var(--pink-soft)}
-.stat .n{font-weight:700;font-size:22px}.stat .l{font-size:12px;color:var(--muted)}
-button{border:0;border-radius:14px;padding:12px 14px;font-size:15px;background:var(--pink);color:#3d2831;font-weight:600}
-button.secondary{background:#f3edf0;color:var(--ink)}
-button.danger{background:#fbe8ec;color:var(--danger)}
-button.small{padding:8px 10px;border-radius:10px;font-size:13px}
-input,select,textarea{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:15px}
-textarea{min-height:80px;resize:vertical}
-label{font-size:12px;color:var(--muted);display:block;margin:10px 0 5px}
-.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
-.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}
-.item-title{font-weight:650}.item-sub{font-size:13px;color:var(--muted);margin-top:4px}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,250,250,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:center;z-index:5}
-.nav-inner{width:min(760px,100%);display:grid;grid-template-columns:repeat(5,1fr)}
-.nav button{background:none;border-radius:0;padding:12px 4px;color:var(--muted);font-size:12px}
-.nav button.active{color:var(--pink-dark);font-weight:700}
-.view{display:none}.view.active{display:block}
-.badge{display:inline-block;padding:5px 8px;border-radius:999px;background:var(--pink-soft);font-size:12px;margin-right:5px}
-.progress{height:8px;background:#f3e7eb;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:var(--pink)}
-h2{font-size:20px;margin:4px 0 10px} h3{font-size:16px;margin:0 0 8px}
-.mini{font-size:12px;color:var(--muted)}
-.setrow{display:grid;grid-template-columns:52px 1fr 1fr 42px;gap:6px;align-items:center;margin:6px 0}
-hr{border:0;border-top:1px solid var(--line);margin:14px 0}
-.empty{color:var(--muted);font-size:14px;padding:10px 0}
-</style>
-</head>
-<body>
+:root{--bg:#fffafa;--card:#fff;--ink:#30292d;--muted:#8d8186;--line:#efdfe5;--pink:#e7a7bc;--pink2:#c97f9a;--soft:#f8e7ed;--danger:#c45c6f}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+.app{max-width:760px;margin:auto;padding:18px 16px 92px}.header{display:flex;justify-content:space-between;align-items:center;margin:8px 0 18px}
+h1{font-size:28px;margin:0}h2{font-size:20px;margin:4px 0 10px}h3{font-size:16px;margin:0}.sub,.mini,.item-sub{color:var(--muted);font-size:13px;line-height:1.45}
+.card,.step{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 4px 18px rgba(80,40,55,.04)}
+.step{border-radius:15px;padding:13px;box-shadow:none}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat{padding:14px;border-radius:16px;background:var(--soft)}
+.stat b{font-size:22px;display:block}.stat span{font-size:12px;color:var(--muted)}
+button{border:0;border-radius:14px;padding:12px 14px;background:var(--pink);color:#3d2831;font-size:15px;font-weight:650}button.secondary{background:#f3edf0}button.danger{background:#fbe8ec;color:var(--danger)}button.small{padding:8px 10px;font-size:13px;border-radius:10px}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-size:15px}textarea{min-height:75px}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}.row{display:flex;gap:8px;align-items:flex-end}.row>*{flex:1}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+.item{padding:12px 0;border-top:1px solid var(--line)}.item:first-child{border-top:0}.item-title{font-weight:650}.empty{color:var(--muted);font-size:14px;padding:10px 0}
+.badge{display:inline-block;padding:5px 8px;border-radius:999px;background:var(--soft);font-size:12px;margin:4px 4px 0 0}.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:var(--soft);font-size:11px;color:var(--pink2);font-weight:700}
+.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,250,250,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:center}.navin{width:min(760px,100%);display:grid;grid-template-columns:repeat(5,1fr)}
+.nav button{background:none;border-radius:0;padding:12px 3px;color:var(--muted);font-size:12px}.nav button.active{color:var(--pink2)}.view{display:none}.view.active{display:block}.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick button{min-height:54px}
+.stepnum{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--pink2);font-weight:700}.stephead{display:flex;justify-content:space-between;gap:8px}.logger{border:2px solid var(--soft)}
+canvas{width:100%;height:auto}@media(max-width:430px){.row{flex-direction:column;align-items:stretch}}
+</style></head><body>
 <div class="app">
-  <div class="header">
-    <div><h1>Fitness Journey</h1><div class="sub">V1 · simple workout & activity tracker</div></div>
-    <button class="secondary small" onclick="exportData()">Export</button>
-  </div>
+<div class="header"><div><h1>Fitness Journey</h1><div class="sub">V1.1 · gym, walks, runs & weight</div></div><button class="secondary small" onclick="exportData()">Export</button></div>
 
-  <section id="home" class="view active">
-    <div class="card">
-      <h2>Today</h2>
-      <div class="grid2">
-        <div class="stat"><div class="n" id="homeSteps">0</div><div class="l">steps</div></div>
-        <div class="stat"><div class="n" id="homeWorkouts">0</div><div class="l">workouts this week</div></div>
-        <div class="stat"><div class="n" id="homeDistance">0 km</div><div class="l">walk/run this week</div></div>
-        <div class="stat"><div class="n" id="homeWeight">—</div><div class="l">latest weight</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <h2>Quick log</h2>
-      <div class="actions">
-        <button onclick="showView('workout')">Start workout</button>
-        <button class="secondary" onclick="showView('activity')">Log walk/run</button>
-        <button class="secondary" onclick="showView('progress')">Log weight</button>
-      </div>
-    </div>
-    <div class="card">
-      <h2>Recent activity</h2>
-      <div id="recentList"></div>
-    </div>
-  </section>
-
-  <section id="workout" class="view">
-    <div class="card">
-      <h2>Workout templates</h2>
-      <label>Template name</label><input id="tplName" placeholder="e.g. Cardio + Glutes">
-      <label>Exercises</label><div id="tplExercises"></div>
-      <button class="secondary small" onclick="addTplExercise()">+ Add exercise</button>
-      <div class="actions"><button onclick="saveTemplate()">Save template</button></div>
-    </div>
-    <div class="card"><h2>Saved templates</h2><div id="templateList"></div></div>
-    <div id="liveWorkoutCard" class="card" style="display:none"></div>
-    <div class="card"><h2>Workout history</h2><div id="workoutHistory"></div></div>
-  </section>
-
-  <section id="activity" class="view">
-    <div class="card">
-      <h2>Log walk / run</h2>
-      <div class="row">
-        <div><label>Type</label><select id="actType"><option>Walk</option><option>Run</option><option>Treadmill Walk</option><option>Treadmill Run</option><option>Hike</option><option>Other</option></select></div>
-        <div><label>Date</label><input id="actDate" type="date"></div>
-      </div>
-      <div class="row">
-        <div><label>Distance (km)</label><input id="actDistance" type="number" step="0.01"></div>
-        <div><label>Duration (min)</label><input id="actDuration" type="number" step="1"></div>
-      </div>
-      <div class="row">
-        <div><label>Steps</label><input id="actSteps" type="number" step="1"></div>
-        <div><label>Effort (1–10)</label><input id="actEffort" type="number" min="1" max="10"></div>
-      </div>
-      <label>Notes</label><textarea id="actNotes" placeholder="Optional"></textarea>
-      <button onclick="saveActivity()">Save activity</button>
-    </div>
-    <div class="card"><h2>Activity history</h2><div id="activityHistory"></div></div>
-  </section>
-
-  <section id="progress" class="view">
-    <div class="card">
-      <h2>Weight</h2>
-      <div class="row"><div><label>Date</label><input id="weightDate" type="date"></div><div><label>Weight (kg)</label><input id="weightValue" type="number" step="0.1"></div></div>
-      <button onclick="saveWeight()">Save weight</button>
-    </div>
-    <div class="card">
-      <h2>Weight trend</h2>
-      <div id="weightSummary" class="mini"></div>
-      <canvas id="weightChart" width="700" height="260" style="width:100%;height:auto;margin-top:8px"></canvas>
-    </div>
-    <div class="card">
-      <h2>Steps</h2>
-      <div class="row"><div><label>Date</label><input id="stepsDate" type="date"></div><div><label>Steps</label><input id="stepsValue" type="number"></div></div>
-      <button onclick="saveSteps()">Save steps</button>
-      <div id="stepsHistory"></div>
-    </div>
-  </section>
-
-  <section id="library" class="view">
-    <div class="card">
-      <h2>Exercise library</h2>
-      <label>Exercise name</label><input id="exName" placeholder="e.g. Goblet Squat">
-      <label>Form tips</label><textarea id="exTips" placeholder="Optional form cues"></textarea>
-      <button onclick="saveExercise()">Save exercise</button>
-    </div>
-    <div class="card"><h2>Saved exercises</h2><div id="exerciseList"></div></div>
-    <div class="card">
-      <h2>Backup</h2>
-      <div class="actions">
-        <button class="secondary" onclick="exportData()">Export backup</button>
-        <input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importData(event)">
-        <button class="secondary" onclick="document.getElementById('importFile').click()">Import backup</button>
-        <button class="danger" onclick="resetAll()">Reset all</button>
-      </div>
-      <div class="mini" style="margin-top:8px">Apple Health direct sync is not included in this PWA version. We can add a Shortcut-based sync later.</div>
-    </div>
-  </section>
-</div>
-
-<div class="nav"><div class="nav-inner">
-  <button class="active" data-v="home" onclick="showView('home')">Home</button>
-  <button data-v="workout" onclick="showView('workout')">Workout</button>
-  <button data-v="activity" onclick="showView('activity')">Activity</button>
-  <button data-v="progress" onclick="showView('progress')">Progress</button>
-  <button data-v="library" onclick="showView('library')">Library</button>
+<section id="home" class="view active">
+<div class="card"><h2>Dashboard</h2><div class="grid">
+<div class="stat"><b id="homeWorkouts">0</b><span>gym sessions this week</span></div>
+<div class="stat"><b id="homeActivities">0</b><span>walks / runs this week</span></div>
+<div class="stat"><b id="homeDistance">0 km</b><span>distance this week</span></div>
+<div class="stat"><b id="homeWeight">—</b><span>latest weight</span></div>
 </div></div>
+<div class="card"><h2>Quick log</h2><div class="quick">
+<button onclick="quickActivity('Walk')">Log walk</button><button onclick="quickActivity('Run')">Log run</button>
+<button class="secondary" onclick="showView('workout')">Log gym session</button><button class="secondary" onclick="showView('progress')">Log weight</button>
+</div></div>
+<div class="card"><h2>Recent activity</h2><div id="recentList"></div></div>
+</section>
+
+<section id="workout" class="view"><div id="workoutMain">
+<div class="card"><h2>Create workout template</h2><label>Template name</label><input id="tplName" placeholder="e.g. Cardio + Glutes"><div id="tplSteps"></div><button class="secondary small" onclick="addTemplateStep()">+ Add step</button><div class="actions"><button onclick="saveTemplate()">Save template</button></div></div>
+<div class="card"><h2>Saved templates</h2><div id="templateList"></div></div>
+<div class="card"><h2>Workout history</h2><div id="workoutHistory"></div></div>
+</div><div id="workoutLogger" style="display:none"></div></section>
+
+<section id="activity" class="view">
+<div class="card"><h2>Log walk / run</h2>
+<div class="row"><div><label>Type</label><select id="actType"><option>Walk</option><option>Run</option><option>Treadmill Walk</option><option>Treadmill Run</option><option>Hike</option><option>Other</option></select></div><div><label>Date</label><input id="actDate" type="date"></div></div>
+<div class="row"><div><label>Distance (km)</label><input id="actDistance" type="number" step=".01" placeholder="3.40"></div><div><label>Moving time</label><input id="actTime" placeholder="e.g. 32:15"></div></div>
+<div class="row"><div><label>Pace (min/km)</label><input id="actPace" placeholder="e.g. 9:29"></div><div><label>Effort (optional, 1–10)</label><input id="actEffort" type="number" min="1" max="10"></div></div>
+<label>Notes</label><textarea id="actNotes" placeholder="Optional"></textarea><button onclick="saveActivity()">Save activity</button>
+</div><div class="card"><h2>Activity history</h2><div id="activityHistory"></div></div></section>
+
+<section id="progress" class="view">
+<div class="card"><h2>Log weight</h2><div class="row"><div><label>Date</label><input id="weightDate" type="date"></div><div><label>Weight (kg)</label><input id="weightValue" type="number" step=".1"></div></div><button onclick="saveWeight()">Save weight</button><div class="mini" style="margin-top:8px">Designed to work well with weekly weigh-ins.</div></div>
+<div class="card"><h2>Weight trend</h2><div id="weightSummary" class="mini"></div><canvas id="weightChart" width="700" height="260"></canvas><div id="weightHistory"></div></div>
+</section>
+
+<section id="library" class="view">
+<div class="card"><h2>Exercise library</h2><input id="editExerciseId" type="hidden"><label>Exercise name</label><input id="exName" placeholder="e.g. Goblet Squat"><label>Form tips</label><textarea id="exTips" placeholder="Optional form cues"></textarea><div class="actions"><button id="saveExBtn" onclick="saveExercise()">Save exercise</button><button id="cancelExBtn" class="secondary" style="display:none" onclick="cancelExerciseEdit()">Cancel</button></div></div>
+<div class="card"><h2>Saved exercises</h2><div id="exerciseList"></div></div>
+<div class="card"><h2>Backup</h2><div class="actions"><button class="secondary" onclick="exportData()">Export backup</button><input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importData(event)"><button class="secondary" onclick="document.getElementById('importFile').click()">Import backup</button><button class="danger" onclick="resetAll()">Reset all</button></div></div>
+</section></div>
+
+<div class="nav"><div class="navin"><button class="active" data-v="home" onclick="showView('home')">Home</button><button data-v="workout" onclick="showView('workout')">Workout</button><button data-v="activity" onclick="showView('activity')">Walk / Run</button><button data-v="progress" onclick="showView('progress')">Progress</button><button data-v="library" onclick="showView('library')">Library</button></div></div>
 
 <script>
-const K={ex:'fjExercises',tpl:'fjTemplates',wo:'fjWorkouts',act:'fjActivities',wt:'fjWeights',steps:'fjSteps'};
-let exercises=load(K.ex,[]),templates=load(K.tpl,[]),workouts=load(K.wo,[]),activities=load(K.act,[]),weights=load(K.wt,[]),steps=load(K.steps,{});
-let tplDraft=[],live=null;
+const K={ex:'fjExercises',tpl:'fjTemplates',wo:'fjWorkouts',act:'fjActivities',wt:'fjWeights'};
+let exercises=load(K.ex,[]),templates=load(K.tpl,[]),workouts=load(K.wo,[]),activities=load(K.act,[]),weights=load(K.wt,[]);
+let tplDraft=[],logDraft=null;
 function load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}
-function save(){localStorage.setItem(K.ex,JSON.stringify(exercises));localStorage.setItem(K.tpl,JSON.stringify(templates));localStorage.setItem(K.wo,JSON.stringify(workouts));localStorage.setItem(K.act,JSON.stringify(activities));localStorage.setItem(K.wt,JSON.stringify(weights));localStorage.setItem(K.steps,JSON.stringify(steps))}
-const today=()=>new Date().toISOString().slice(0,10);
-actDate.value=weightDate.value=stepsDate.value=today();
+function save(){localStorage.setItem(K.ex,JSON.stringify(exercises));localStorage.setItem(K.tpl,JSON.stringify(templates));localStorage.setItem(K.wo,JSON.stringify(workouts));localStorage.setItem(K.act,JSON.stringify(activities));localStorage.setItem(K.wt,JSON.stringify(weights))}
+function uid(p='id'){return p+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)}
+function today(){return new Date().toISOString().slice(0,10)}
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.v===v));renderAll()}
-function saveExercise(){let n=exName.value.trim();if(!n)return alert('Enter an exercise name.');exercises.push({id:crypto.randomUUID(),name:n,tips:exTips.value.trim()});exName.value='';exTips.value='';save();renderAll()}
-function deleteExercise(id){exercises=exercises.filter(x=>x.id!==id);save();renderAll()}
-function renderExercises(){exerciseList.innerHTML=exercises.length?exercises.map(x=>`<div class="item"><div class="item-title">${esc(x.name)}</div><div class="item-sub">${esc(x.tips||'No form notes')}</div><div class="actions"><button class="danger small" onclick="deleteExercise('${x.id}')">Delete</button></div></div>`).join(''):'<div class="empty">No exercises yet.</div>'}
-function addTplExercise(){tplDraft.push({exerciseId:exercises[0]?.id||'',sets:3,reps:10,weight:0});renderTplDraft()}
-function renderTplDraft(){tplExercises.innerHTML=tplDraft.length?tplDraft.map((x,i)=>`<div class="item"><label>Exercise</label><select onchange="tplDraft[${i}].exerciseId=this.value">${exercises.map(e=>`<option value="${e.id}" ${e.id===x.exerciseId?'selected':''}>${esc(e.name)}</option>`).join('')}</select><div class="row"><div><label>Sets</label><input type="number" value="${x.sets}" onchange="tplDraft[${i}].sets=+this.value"></div><div><label>Reps</label><input type="number" value="${x.reps}" onchange="tplDraft[${i}].reps=+this.value"></div><div><label>Weight kg</label><input type="number" step=".5" value="${x.weight}" onchange="tplDraft[${i}].weight=+this.value"></div></div><button class="danger small" onclick="tplDraft.splice(${i},1);renderTplDraft()">Remove</button></div>`).join(''):'<div class="empty">Add exercises to this template.</div>'}
-function saveTemplate(){let n=tplName.value.trim();if(!n||!tplDraft.length)return alert('Add a name and at least one exercise.');templates.push({id:crypto.randomUUID(),name:n,items:JSON.parse(JSON.stringify(tplDraft))});tplName.value='';tplDraft=[];save();renderAll()}
-function startWorkout(id){let t=templates.find(x=>x.id===id);if(!t)return;live={id:crypto.randomUUID(),templateId:id,name:t.name,date:today(),startedAt:new Date().toISOString(),items:t.items.map(it=>({exerciseId:it.exerciseId,sets:Array.from({length:it.sets},()=>({reps:it.reps,weight:it.weight,done:false}))}))};renderLive()}
-function renderTemplates(){templateList.innerHTML=templates.length?templates.map(t=>`<div class="item"><div class="item-title">${esc(t.name)}</div><div class="item-sub">${t.items.length} exercises</div><div class="actions"><button onclick="startWorkout('${t.id}')">Start</button><button class="danger small" onclick="templates=templates.filter(x=>x.id!=='${t.id}');save();renderAll()">Delete</button></div></div>`).join(''):'<div class="empty">No templates yet.</div>'}
-function renderLive(){if(!live){liveWorkoutCard.style.display='none';return}liveWorkoutCard.style.display='block';liveWorkoutCard.innerHTML=`<h2>${esc(live.name)}</h2><div class="mini">${live.date}</div>${live.items.map((it,i)=>{let e=exercises.find(x=>x.id===it.exerciseId)||{name:'Exercise',tips:''};return `<div class="item"><div class="item-title">${esc(e.name)}</div>${e.tips?`<div class="item-sub">${esc(e.tips)}</div>`:''}${it.sets.map((s,j)=>`<div class="setrow"><div>Set ${j+1}</div><input type="number" value="${s.reps}" onchange="live.items[${i}].sets[${j}].reps=+this.value"><input type="number" step=".5" value="${s.weight}" onchange="live.items[${i}].sets[${j}].weight=+this.value"><input type="checkbox" ${s.done?'checked':''} onchange="live.items[${i}].sets[${j}].done=this.checked"></div>`).join('')}<button class="secondary small" onclick="live.items[${i}].sets.push({reps:10,weight:0,done:false});renderLive()">+ Set</button></div>`}).join('')}<div class="actions"><button onclick="finishWorkout()">Finish workout</button><button class="danger" onclick="live=null;renderLive()">Cancel</button></div>`}
-function finishWorkout(){live.finishedAt=new Date().toISOString();workouts.unshift(live);live=null;save();renderAll()}
-function renderWorkoutHistory(){workoutHistory.innerHTML=workouts.length?workouts.slice(0,20).map(w=>`<div class="item"><div class="item-title">${esc(w.name)}</div><div class="item-sub">${w.date} · ${w.items.length} exercises</div></div>`).join(''):'<div class="empty">No completed workouts yet.</div>'}
-function saveActivity(){let d=actDate.value||today(),dist=+actDistance.value||0,dur=+actDuration.value||0;activities.unshift({id:crypto.randomUUID(),type:actType.value,date:d,distance:dist,duration:dur,steps:+actSteps.value||0,effort:+actEffort.value||0,notes:actNotes.value.trim()});actDistance.value=actDuration.value=actSteps.value=actEffort.value='';actNotes.value='';save();renderAll()}
-function renderActivityHistory(){activityHistory.innerHTML=activities.length?activities.slice(0,30).map(a=>`<div class="item"><div class="item-title">${esc(a.type)} · ${a.distance||0} km</div><div class="item-sub">${a.date} · ${a.duration||0} min${a.distance&&a.duration?` · ${(a.duration/a.distance).toFixed(1)} min/km`:''}${a.steps?` · ${a.steps} steps`:''}</div>${a.notes?`<div class="item-sub">${esc(a.notes)}</div>`:''}</div>`).join(''):'<div class="empty">No walks or runs logged yet.</div>'}
-function saveWeight(){let v=+weightValue.value;if(!v)return alert('Enter a weight.');weights=weights.filter(x=>x.date!==weightDate.value);weights.push({date:weightDate.value||today(),value:v});weights.sort((a,b)=>a.date.localeCompare(b.date));weightValue.value='';save();renderAll()}
-function saveSteps(){let v=+stepsValue.value;if(!v)return alert('Enter steps.');steps[stepsDate.value||today()]=v;stepsValue.value='';save();renderAll()}
-function renderSteps(){let arr=Object.entries(steps).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,14);stepsHistory.innerHTML=arr.length?arr.map(([d,v])=>`<div class="item"><div class="item-title">${v.toLocaleString()} steps</div><div class="item-sub">${d}</div></div>`).join(''):'<div class="empty">No step entries yet.</div>'}
-function drawWeight(){const c=weightChart,ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);if(!weights.length){weightSummary.textContent='No weight entries yet.';return}let vals=weights.map(x=>x.value),min=Math.min(...vals)-.5,max=Math.max(...vals)+.5;weightSummary.textContent=`Latest ${vals.at(-1).toFixed(1)} kg · ${weights.length} entries`;ctx.strokeStyle='#e7a7bc';ctx.lineWidth=4;ctx.beginPath();weights.forEach((w,i)=>{let x=30+(c.width-60)*(i/Math.max(1,weights.length-1)),y=20+(c.height-40)*(1-(w.value-min)/(max-min||1));i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();ctx.fillStyle='#c97f9a';weights.forEach((w,i)=>{let x=30+(c.width-60)*(i/Math.max(1,weights.length-1)),y=20+(c.height-40)*(1-(w.value-min)/(max-min||1));ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill()})}
-function thisWeek(d){let now=new Date(),x=new Date(d+'T12:00:00'),diff=(now-x)/86400000;return diff>=0&&diff<7}
-function renderHome(){homeSteps.textContent=(steps[today()]||0).toLocaleString();homeWorkouts.textContent=workouts.filter(w=>thisWeek(w.date)).length;let km=activities.filter(a=>thisWeek(a.date)).reduce((s,a)=>s+(a.distance||0),0);homeDistance.textContent=km.toFixed(1)+' km';homeWeight.textContent=weights.length?weights.at(-1).value.toFixed(1)+' kg':'—';let rec=[...workouts.map(x=>({date:x.date,title:x.name,sub:'Workout'})),...activities.map(x=>({date:x.date,title:x.type,sub:(x.distance||0)+' km'}))].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);recentList.innerHTML=rec.length?rec.map(r=>`<div class="item"><div class="item-title">${esc(r.title)}</div><div class="item-sub">${r.date} · ${esc(r.sub)}</div></div>`).join(''):'<div class="empty">Nothing logged yet.</div>'}
-function exportData(){let data={version:'1.0',exportedAt:new Date().toISOString(),exercises,templates,workouts,activities,weights,steps};let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='fitness-journey-backup.json';a.click();URL.revokeObjectURL(a.href)}
-function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!confirm('Replace current app data with this backup?'))return;exercises=d.exercises||[];templates=d.templates||[];workouts=d.workouts||[];activities=d.activities||[];weights=d.weights||[];steps=d.steps||{};save();renderAll();alert('Backup imported.')}catch{alert('Could not import that backup.')}};r.readAsText(f)}
+function fmt(n,d=1){return Number(n||0).toFixed(d).replace(/\.0$/,'')}
+actDate.value=weightDate.value=today();
+function showView(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.v===v));if(v!=='workout'&&logDraft)closeWorkoutLogger(false);renderAll()}
+function quickActivity(t){actType.value=t;showView('activity');scrollTo({top:0,behavior:'smooth'})}
+
+function saveExercise(){const name=exName.value.trim();if(!name)return alert('Enter an exercise name.');const id=editExerciseId.value;if(id){const x=exercises.find(e=>e.id===id);if(x){x.name=name;x.tips=exTips.value.trim()}}else exercises.push({id:uid('ex'),name,tips:exTips.value.trim()});save();cancelExerciseEdit();renderAll()}
+function editExercise(id){const x=exercises.find(e=>e.id===id);if(!x)return;editExerciseId.value=id;exName.value=x.name;exTips.value=x.tips||'';saveExBtn.textContent='Save changes';cancelExBtn.style.display='inline-block';showView('library');scrollTo({top:0,behavior:'smooth'})}
+function cancelExerciseEdit(){editExerciseId.value='';exName.value='';exTips.value='';saveExBtn.textContent='Save exercise';cancelExBtn.style.display='none'}
+function deleteExercise(id){if(!confirm('Delete this exercise? Existing saved workout data will stay intact.'))return;exercises=exercises.filter(x=>x.id!==id);save();renderAll()}
+function renderExercises(){exerciseList.innerHTML=exercises.length?exercises.map(x=>`<div class="item"><div class="item-title">${esc(x.name)}</div><div class="item-sub">${esc(x.tips||'No form tips saved')}</div><div class="actions"><button class="secondary small" onclick="editExercise('${x.id}')">Edit</button><button class="danger small" onclick="deleteExercise('${x.id}')">Delete</button></div></div>`).join(''):'<div class="empty">No exercises yet.</div>'}
+
+function blankStep(type='strength'){if(type==='strength')return{id:uid('step'),type,name:'',exerciseId:'',sets:3,reps:10,weight:0,notes:''};if(type==='cardio')return{id:uid('step'),type,name:'Treadmill',duration:'',speed:'',incline:'',notes:''};return{id:uid('step'),type,name:'Dynamic warm-up',duration:'',notes:''}}
+function addTemplateStep(){tplDraft.push(blankStep());renderTplDraft()}
+function changeStepType(i,t){tplDraft[i]=blankStep(t);renderTplDraft()}
+function exName(id){return exercises.find(e=>e.id===id)?.name||''}
+function exTips(id){return exercises.find(e=>e.id===id)?.tips||''}
+function renderTplDraft(){tplSteps.innerHTML=tplDraft.length?tplDraft.map((s,i)=>{let body='';if(s.type==='strength')body=`<label>Exercise</label><select onchange="tplDraft[${i}].exerciseId=this.value;tplDraft[${i}].name=exName(this.value)"><option value="">Choose saved exercise</option>${exercises.map(e=>`<option value="${e.id}" ${e.id===s.exerciseId?'selected':''}>${esc(e.name)}</option>`).join('')}</select><div class="row"><div><label>Sets</label><input type="number" value="${s.sets}" onchange="tplDraft[${i}].sets=+this.value"></div><div><label>Reps</label><input type="number" value="${s.reps}" onchange="tplDraft[${i}].reps=+this.value"></div><div><label>Weight (kg)</label><input type="number" step=".5" value="${s.weight}" onchange="tplDraft[${i}].weight=+this.value"></div></div><label>Notes</label><input value="${esc(s.notes||'')}" onchange="tplDraft[${i}].notes=this.value">`;else if(s.type==='cardio')body=`<label>Step name</label><input value="${esc(s.name)}" onchange="tplDraft[${i}].name=this.value"><div class="row"><div><label>Target time</label><input value="${esc(s.duration)}" onchange="tplDraft[${i}].duration=this.value" placeholder="10 min"></div><div><label>Speed</label><input value="${esc(s.speed)}" onchange="tplDraft[${i}].speed=this.value" placeholder="5.0"></div><div><label>Incline</label><input value="${esc(s.incline)}" onchange="tplDraft[${i}].incline=this.value" placeholder="0"></div></div><label>Notes</label><input value="${esc(s.notes)}" onchange="tplDraft[${i}].notes=this.value">`;else body=`<label>Step name</label><input value="${esc(s.name)}" onchange="tplDraft[${i}].name=this.value"><label>Approx. duration</label><input value="${esc(s.duration)}" onchange="tplDraft[${i}].duration=this.value" placeholder="5 min"><label>Instructions / movements</label><textarea onchange="tplDraft[${i}].notes=this.value">${esc(s.notes)}</textarea>`;return`<div class="step"><div class="stephead"><div class="stepnum">Step ${i+1}</div><button class="danger small" onclick="tplDraft.splice(${i},1);renderTplDraft()">Remove</button></div><label>Step type</label><select onchange="changeStepType(${i},this.value)"><option value="warmup" ${s.type==='warmup'?'selected':''}>Warm-up / Stretching</option><option value="cardio" ${s.type==='cardio'?'selected':''}>Treadmill / Cardio</option><option value="strength" ${s.type==='strength'?'selected':''}>Strength exercise</option></select>${body}</div>`}).join(''):'<div class="empty">Add the steps of your workout in order.</div>'}
+function saveTemplate(){const name=tplName.value.trim();if(!name||!tplDraft.length)return alert('Add a name and at least one step.');const steps=JSON.parse(JSON.stringify(tplDraft)).map(s=>{if(s.type==='strength'&&!s.name)s.name=exName(s.exerciseId)||'Strength exercise';return s});templates.push({id:uid('tpl'),name,steps});tplName.value='';tplDraft=[];save();renderAll()}
+function deleteTemplate(id){if(!confirm('Delete this template? Logged workouts will stay.'))return;templates=templates.filter(t=>t.id!==id);save();renderAll()}
+function renderTemplates(){templateList.innerHTML=templates.length?templates.map(t=>`<div class="item"><div class="item-title">${esc(t.name)}</div><div class="item-sub">${(t.steps||[]).length} steps</div><div>${(t.steps||[]).map(s=>`<span class="badge">${esc(s.name||s.type)}</span>`).join('')}</div><div class="actions"><button onclick="startWorkoutLog('${t.id}')">Start</button><button class="danger small" onclick="deleteTemplate('${t.id}')">Delete</button></div></div>`).join(''):'<div class="empty">No workout templates yet.</div>'}
+
+function startWorkoutLog(id){const t=templates.find(x=>x.id===id);if(!t)return;logDraft={id:uid('wo'),templateId:id,name:t.name,date:today(),notes:'',steps:JSON.parse(JSON.stringify(t.steps||[])).map(s=>s.type==='strength'?{...s,actualSets:s.sets,actualReps:s.reps,actualWeight:s.weight,actualNotes:''}:s.type==='cardio'?{...s,actualDuration:s.duration,actualSpeed:s.speed,actualIncline:s.incline,actualDistance:'',actualNotes:''}:{...s,actualDuration:s.duration,actualNotes:''})};workoutMain.style.display='none';workoutLogger.style.display='block';renderWorkoutLogger();scrollTo({top:0,behavior:'smooth'})}
+function closeWorkoutLogger(ask=true){if(logDraft&&ask&&!confirm('Close without saving this workout log?'))return;logDraft=null;workoutMain.style.display='block';workoutLogger.style.display='none'}
+function renderWorkoutLogger(){if(!logDraft)return;workoutLogger.innerHTML=`<div class="card logger"><div class="actions"><button class="secondary small" onclick="closeWorkoutLogger()">← Back</button></div><h2>${esc(logDraft.name)}</h2><div class="mini">Log what you actually did — the template steps are fixed.</div><label>Date</label><input type="date" value="${logDraft.date}" onchange="logDraft.date=this.value">${logDraft.steps.map((s,i)=>renderLogStep(s,i)).join('')}<label>Overall workout notes</label><textarea onchange="logDraft.notes=this.value">${esc(logDraft.notes)}</textarea><div class="actions"><button onclick="saveWorkoutLog()">Save gym session</button><button class="secondary" onclick="closeWorkoutLogger()">Cancel</button></div></div>`}
+function renderLogStep(s,i){if(s.type==='strength')return`<div class="step"><div class="stepnum">Step ${i+1}</div><h3>${esc(s.name)}</h3><span class="pill">Strength</span><div class="item-sub">Template: ${s.sets} × ${s.reps}${s.weight!==''?' @ '+s.weight+' kg':''}</div>${exTips(s.exerciseId)?`<div class="item-sub"><b>Form:</b> ${esc(exTips(s.exerciseId))}</div>`:''}<div class="row"><div><label>Sets</label><input type="number" value="${s.actualSets}" onchange="logDraft.steps[${i}].actualSets=this.value"></div><div><label>Reps</label><input type="number" value="${s.actualReps}" onchange="logDraft.steps[${i}].actualReps=this.value"></div><div><label>Weight (kg)</label><input type="number" step=".5" value="${s.actualWeight}" onchange="logDraft.steps[${i}].actualWeight=this.value"></div></div><label>Notes</label><input value="${esc(s.actualNotes)}" onchange="logDraft.steps[${i}].actualNotes=this.value"></div>`;if(s.type==='cardio')return`<div class="step"><div class="stepnum">Step ${i+1}</div><h3>${esc(s.name)}</h3><span class="pill">Treadmill / Cardio</span><div class="row"><div><label>Moving time</label><input value="${esc(s.actualDuration)}" onchange="logDraft.steps[${i}].actualDuration=this.value"></div><div><label>Speed</label><input value="${esc(s.actualSpeed)}" onchange="logDraft.steps[${i}].actualSpeed=this.value"></div><div><label>Incline</label><input value="${esc(s.actualIncline)}" onchange="logDraft.steps[${i}].actualIncline=this.value"></div></div><label>Distance</label><input value="${esc(s.actualDistance)}" onchange="logDraft.steps[${i}].actualDistance=this.value"><label>Notes</label><input value="${esc(s.actualNotes)}" onchange="logDraft.steps[${i}].actualNotes=this.value"></div>`;return`<div class="step"><div class="stepnum">Step ${i+1}</div><h3>${esc(s.name)}</h3><span class="pill">Warm-up / Stretching</span>${s.notes?`<div class="item-sub">${esc(s.notes)}</div>`:''}<label>Approx. time</label><input value="${esc(s.actualDuration)}" onchange="logDraft.steps[${i}].actualDuration=this.value"><label>Notes</label><textarea onchange="logDraft.steps[${i}].actualNotes=this.value">${esc(s.actualNotes)}</textarea></div>`}
+function saveWorkoutLog(){workouts.unshift({...logDraft,savedAt:new Date().toISOString()});save();closeWorkoutLogger(false);renderAll()}
+function renderWorkoutHistory(){workoutHistory.innerHTML=workouts.length?workouts.slice(0,30).map(w=>`<div class="item"><div class="item-title">${esc(w.name)}</div><div class="item-sub">${w.date} · ${(w.steps||w.items||[]).length} steps</div></div>`).join(''):'<div class="empty">No gym sessions logged yet.</div>'}
+
+function timeToMinutes(v){if(!v)return 0;let p=String(v).trim().split(':').map(Number);if(p.some(Number.isNaN))return 0;if(p.length===2)return p[0]+p[1]/60;if(p.length===3)return p[0]*60+p[1]+p[2]/60;return Number(v)||0}
+function paceText(m){if(!m)return'';let a=Math.floor(m),s=Math.round((m-a)*60);if(s===60){a++;s=0}return a+':'+String(s).padStart(2,'0')}
+function saveActivity(){const distance=+actDistance.value||0,movingTime=actTime.value.trim();let pace=actPace.value.trim();if(!pace&&distance&&movingTime){let mins=timeToMinutes(movingTime);if(mins)pace=paceText(mins/distance)}activities.unshift({id:uid('act'),type:actType.value,date:actDate.value||today(),distance,movingTime,pace,effort:+actEffort.value||null,notes:actNotes.value.trim()});actDistance.value=actTime.value=actPace.value=actEffort.value='';actNotes.value='';save();renderAll()}
+function deleteActivity(id){if(!confirm('Delete this activity?'))return;activities=activities.filter(a=>a.id!==id);save();renderAll()}
+function renderActivityHistory(){activityHistory.innerHTML=activities.length?activities.slice(0,40).map(a=>`<div class="item"><div class="item-title">${esc(a.type)} · ${fmt(a.distance,2)} km</div><div class="item-sub">${a.date}${a.movingTime?' · '+esc(a.movingTime)+' moving':''}${a.pace?' · '+esc(a.pace)+' /km':''}${a.effort?' · effort '+a.effort+'/10':''}</div>${a.notes?`<div class="item-sub">${esc(a.notes)}</div>`:''}<div class="actions"><button class="danger small" onclick="deleteActivity('${a.id}')">Delete</button></div></div>`).join(''):'<div class="empty">No walks or runs logged yet.</div>'}
+
+function saveWeight(){const v=+weightValue.value;if(!v)return alert('Enter a weight.');const d=weightDate.value||today();weights=weights.filter(x=>x.date!==d);weights.push({date:d,value:v});weights.sort((a,b)=>a.date.localeCompare(b.date));weightValue.value='';save();renderAll()}
+function deleteWeight(d){if(!confirm('Delete this weigh-in?'))return;weights=weights.filter(w=>w.date!==d);save();renderAll()}
+function drawWeight(){const c=weightChart,ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);if(!weights.length){weightSummary.textContent='No weigh-ins yet.';return}const vals=weights.map(x=>x.value),latest=vals.at(-1),first=vals[0],change=latest-first;weightSummary.textContent=`Latest ${latest.toFixed(1)} kg · ${(change>0?'+':'')+change.toFixed(1)} kg since first log · ${weights.length} weigh-ins`;let min=Math.min(...vals)-.5,max=Math.max(...vals)+.5;ctx.strokeStyle='#e7a7bc';ctx.lineWidth=4;ctx.beginPath();weights.forEach((w,i)=>{let x=30+(c.width-60)*(i/Math.max(1,weights.length-1)),y=20+(c.height-40)*(1-(w.value-min)/(max-min||1));i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();ctx.fillStyle='#c97f9a';weights.forEach((w,i)=>{let x=30+(c.width-60)*(i/Math.max(1,weights.length-1)),y=20+(c.height-40)*(1-(w.value-min)/(max-min||1));ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill()})}
+function renderWeightHistory(){weightHistory.innerHTML=weights.length?[...weights].reverse().map(w=>`<div class="item"><div class="item-title">${w.value.toFixed(1)} kg</div><div class="item-sub">${w.date}</div><div class="actions"><button class="danger small" onclick="deleteWeight('${w.date}')">Delete</button></div></div>`).join(''):''}
+
+function weekStart(){let d=new Date();d.setHours(0,0,0,0);let x=(d.getDay()+6)%7;d.setDate(d.getDate()-x);return d}
+function inWeek(s){let d=new Date(s+'T12:00:00'),a=weekStart(),b=new Date(a);b.setDate(a.getDate()+7);return d>=a&&d<b}
+function renderHome(){let w=workouts.filter(x=>inWeek(x.date)),a=activities.filter(x=>inWeek(x.date));homeWorkouts.textContent=w.length;homeActivities.textContent=a.length;homeDistance.textContent=a.reduce((n,x)=>n+(+x.distance||0),0).toFixed(1)+' km';homeWeight.textContent=weights.length?weights.at(-1).value.toFixed(1)+' kg':'—';let rec=[...workouts.map(x=>({date:x.date,title:x.name,sub:'Gym session'})),...activities.map(x=>({date:x.date,title:x.type,sub:`${fmt(x.distance,2)} km${x.pace?' · '+x.pace+'/km':''}`})),...weights.map(x=>({date:x.date,title:x.value.toFixed(1)+' kg',sub:'Weigh-in'}))].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);recentList.innerHTML=rec.length?rec.map(r=>`<div class="item"><div class="item-title">${esc(r.title)}</div><div class="item-sub">${r.date} · ${esc(r.sub)}</div></div>`).join(''):'<div class="empty">Nothing logged yet.</div>'}
+
+function exportData(){let d={version:'1.1',exportedAt:new Date().toISOString(),exercises,templates,workouts,activities,weights},b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='fitness-journey-backup.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(!confirm('Replace current Fitness Journey data with this backup?'))return;exercises=d.exercises||[];templates=(d.templates||[]).map(t=>t.steps?t:{...t,steps:(t.items||[]).map(it=>({id:uid('step'),type:'strength',exerciseId:it.exerciseId||'',name:exName(it.exerciseId)||'Strength exercise',sets:it.sets||3,reps:it.reps||10,weight:it.weight||0,notes:''}))});workouts=d.workouts||[];activities=(d.activities||[]).map(a=>({...a,movingTime:a.movingTime||(a.duration!=null?String(a.duration)+' min':''),pace:a.pace||''}));weights=d.weights||[];save();renderAll();alert('Backup imported.')}catch(err){console.error(err);alert('Could not import that backup.')}finally{e.target.value=''}};r.readAsText(f)}
 function resetAll(){if(!confirm('Delete all Fitness Journey data on this device?'))return;Object.values(K).forEach(k=>localStorage.removeItem(k));location.reload()}
-function renderAll(){renderExercises();renderTplDraft();renderTemplates();renderLive();renderWorkoutHistory();renderActivityHistory();renderSteps();drawWeight();renderHome()}
-renderAll();
-if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js');
-</script>
-</body>
-</html>
+function renderAll(){renderExercises();renderTplDraft();renderTemplates();renderWorkoutHistory();renderActivityHistory();drawWeight();renderWeightHistory();renderHome()}
+renderAll();if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js');
+</script></body></html>
