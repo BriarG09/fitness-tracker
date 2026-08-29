@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f7e8ee"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png">
-<title>Fitness Journey</title>
+<title>Fitness</title>
 <style>
 :root{--bg:#fffafa;--card:#fff;--ink:#30292d;--muted:#8d8186;--line:#efdfe5;--pink:#e7a7bc;--pink2:#c97f9a;--soft:#f8e7ed;--danger:#c45c6f}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
@@ -22,7 +22,7 @@ label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}.row{dis
 canvas{width:100%;height:auto}@media(max-width:430px){.row{flex-direction:column;align-items:stretch}}
 </style></head><body>
 <div class="app">
-<div class="header"><div><h1>Fitness Journey</h1><div class="sub">V1.1 · gym, walks, runs & weight</div></div><button class="secondary small" onclick="exportData()">Export</button></div>
+<div class="header"><div><h1>Fitness</h1><div class="sub">V1.2 · gym, walks, runs & weight</div></div><button class="secondary small" onclick="exportData()">Export</button></div>
 
 <section id="home" class="view active">
 <div class="card"><h2>Dashboard</h2><div class="grid">
@@ -39,7 +39,7 @@ canvas{width:100%;height:auto}@media(max-width:430px){.row{flex-direction:column
 </section>
 
 <section id="workout" class="view"><div id="workoutMain">
-<div class="card"><h2>Create workout template</h2><label>Template name</label><input id="tplName" placeholder="e.g. Cardio + Glutes"><div id="tplSteps"></div><button class="secondary small" onclick="addTemplateStep()">+ Add step</button><div class="actions"><button onclick="saveTemplate()">Save template</button></div></div>
+<div class="card"><h2 id="templateBuilderTitle">Create workout template</h2><label>Template name</label><input id="tplName" placeholder="e.g. Cardio + Glutes"><div id="tplSteps"></div><button class="secondary small" onclick="addTemplateStep()">+ Add step</button><div class="actions"><button id="saveTemplateBtn" onclick="saveTemplate()">Save template</button><button id="cancelTemplateEditBtn" class="secondary" style="display:none" onclick="cancelTemplateEdit()">Cancel</button></div></div>
 <div class="card"><h2>Saved templates</h2><div id="templateList"></div></div>
 <div class="card"><h2>Workout history</h2><div id="workoutHistory"></div></div>
 </div><div id="workoutLogger" style="display:none"></div></section>
@@ -68,7 +68,7 @@ canvas{width:100%;height:auto}@media(max-width:430px){.row{flex-direction:column
 <script>
 const K={ex:'fjExercises',tpl:'fjTemplates',wo:'fjWorkouts',act:'fjActivities',wt:'fjWeights'};
 let exercises=load(K.ex,[]),templates=load(K.tpl,[]),workouts=load(K.wo,[]),activities=load(K.act,[]),weights=load(K.wt,[]);
-let tplDraft=[],logDraft=null;
+let tplDraft=[],logDraft=null,editingTemplateId='';
 function load(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}
 function save(){localStorage.setItem(K.ex,JSON.stringify(exercises));localStorage.setItem(K.tpl,JSON.stringify(templates));localStorage.setItem(K.wo,JSON.stringify(workouts));localStorage.setItem(K.act,JSON.stringify(activities));localStorage.setItem(K.wt,JSON.stringify(weights))}
 function uid(p='id'){return p+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)}
@@ -91,16 +91,78 @@ function changeStepType(i,t){tplDraft[i]=blankStep(t);renderTplDraft()}
 function exName(id){return exercises.find(e=>e.id===id)?.name||''}
 function exTips(id){return exercises.find(e=>e.id===id)?.tips||''}
 function renderTplDraft(){tplSteps.innerHTML=tplDraft.length?tplDraft.map((s,i)=>{let body='';if(s.type==='strength')body=`<label>Exercise</label><select onchange="tplDraft[${i}].exerciseId=this.value;tplDraft[${i}].name=exName(this.value)"><option value="">Choose saved exercise</option>${exercises.map(e=>`<option value="${e.id}" ${e.id===s.exerciseId?'selected':''}>${esc(e.name)}</option>`).join('')}</select><div class="row"><div><label>Sets</label><input type="number" value="${s.sets}" onchange="tplDraft[${i}].sets=+this.value"></div><div><label>Reps</label><input type="number" value="${s.reps}" onchange="tplDraft[${i}].reps=+this.value"></div><div><label>Weight (kg)</label><input type="number" step=".5" value="${s.weight}" onchange="tplDraft[${i}].weight=+this.value"></div></div><label>Notes</label><input value="${esc(s.notes||'')}" onchange="tplDraft[${i}].notes=this.value">`;else if(s.type==='cardio')body=`<label>Step name</label><input value="${esc(s.name)}" onchange="tplDraft[${i}].name=this.value"><div class="row"><div><label>Target time</label><input value="${esc(s.duration)}" onchange="tplDraft[${i}].duration=this.value" placeholder="10 min"></div><div><label>Speed</label><input value="${esc(s.speed)}" onchange="tplDraft[${i}].speed=this.value" placeholder="5.0"></div><div><label>Incline</label><input value="${esc(s.incline)}" onchange="tplDraft[${i}].incline=this.value" placeholder="0"></div></div><label>Notes</label><input value="${esc(s.notes)}" onchange="tplDraft[${i}].notes=this.value">`;else body=`<label>Step name</label><input value="${esc(s.name)}" onchange="tplDraft[${i}].name=this.value"><label>Approx. duration</label><input value="${esc(s.duration)}" onchange="tplDraft[${i}].duration=this.value" placeholder="5 min"><label>Instructions / movements</label><textarea onchange="tplDraft[${i}].notes=this.value">${esc(s.notes)}</textarea>`;return`<div class="step"><div class="stephead"><div class="stepnum">Step ${i+1}</div><button class="danger small" onclick="tplDraft.splice(${i},1);renderTplDraft()">Remove</button></div><label>Step type</label><select onchange="changeStepType(${i},this.value)"><option value="warmup" ${s.type==='warmup'?'selected':''}>Warm-up / Stretching</option><option value="cardio" ${s.type==='cardio'?'selected':''}>Treadmill / Cardio</option><option value="strength" ${s.type==='strength'?'selected':''}>Strength exercise</option></select>${body}</div>`}).join(''):'<div class="empty">Add the steps of your workout in order.</div>'}
-function saveTemplate(){const name=tplName.value.trim();if(!name||!tplDraft.length)return alert('Add a name and at least one step.');const steps=JSON.parse(JSON.stringify(tplDraft)).map(s=>{if(s.type==='strength'&&!s.name)s.name=exName(s.exerciseId)||'Strength exercise';return s});templates.push({id:uid('tpl'),name,steps});tplName.value='';tplDraft=[];save();renderAll()}
-function deleteTemplate(id){if(!confirm('Delete this template? Logged workouts will stay.'))return;templates=templates.filter(t=>t.id!==id);save();renderAll()}
-function renderTemplates(){templateList.innerHTML=templates.length?templates.map(t=>`<div class="item"><div class="item-title">${esc(t.name)}</div><div class="item-sub">${(t.steps||[]).length} steps</div><div>${(t.steps||[]).map(s=>`<span class="badge">${esc(s.name||s.type)}</span>`).join('')}</div><div class="actions"><button onclick="startWorkoutLog('${t.id}')">Start</button><button class="danger small" onclick="deleteTemplate('${t.id}')">Delete</button></div></div>`).join(''):'<div class="empty">No workout templates yet.</div>'}
+function saveTemplate(){
+ const name=tplName.value.trim();
+ if(!name||!tplDraft.length)return alert('Add a name and at least one step.');
+ const steps=JSON.parse(JSON.stringify(tplDraft)).map(s=>{if(s.type==='strength'&&!s.name)s.name=exName(s.exerciseId)||'Strength exercise';return s});
+ if(editingTemplateId){
+   const t=templates.find(x=>x.id===editingTemplateId);
+   if(t){t.name=name;t.steps=steps;t.updatedAt=new Date().toISOString();}
+ }else{
+   templates.push({id:uid('tpl'),name,steps,createdAt:new Date().toISOString()});
+ }
+ cancelTemplateEdit();
+ save();
+ renderAll();
+}
+function editTemplate(id){
+ const t=templates.find(x=>x.id===id);if(!t)return;
+ editingTemplateId=id;
+ tplName.value=t.name;
+ tplDraft=JSON.parse(JSON.stringify(t.steps||[]));
+ templateBuilderTitle.textContent='Edit workout template';
+ saveTemplateBtn.textContent='Save changes';
+ cancelTemplateEditBtn.style.display='inline-block';
+ renderTplDraft();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function cancelTemplateEdit(){
+ editingTemplateId='';
+ tplName.value='';
+ tplDraft=[];
+ templateBuilderTitle.textContent='Create workout template';
+ saveTemplateBtn.textContent='Save template';
+ cancelTemplateEditBtn.style.display='none';
+ renderTplDraft();
+}
+function deleteTemplate(id){
+ if(!confirm('Delete this template? Logged workouts will stay.'))return;
+ templates=templates.filter(t=>t.id!==id);
+ if(editingTemplateId===id)cancelTemplateEdit();
+ save();renderAll();
+}
+function renderTemplates(){
+ templateList.innerHTML=templates.length?templates.map(t=>`
+ <div class="item">
+   <div class="item-title">${esc(t.name)}</div>
+   <div class="item-sub">${(t.steps||[]).length} steps</div>
+   <div>${(t.steps||[]).map(s=>`<span class="badge">${esc(s.name||s.type)}</span>`).join('')}</div>
+   <div class="actions">
+     <button onclick="startWorkoutLog('${t.id}')">Start</button>
+     <button class="secondary small" onclick="editTemplate('${t.id}')">Edit</button>
+     <button class="danger small" onclick="deleteTemplate('${t.id}')">Delete</button>
+   </div>
+ </div>`).join(''):'<div class="empty">No workout templates yet.</div>';
+}
 
 function startWorkoutLog(id){const t=templates.find(x=>x.id===id);if(!t)return;logDraft={id:uid('wo'),templateId:id,name:t.name,date:today(),notes:'',steps:JSON.parse(JSON.stringify(t.steps||[])).map(s=>s.type==='strength'?{...s,actualSets:s.sets,actualReps:s.reps,actualWeight:s.weight,actualNotes:''}:s.type==='cardio'?{...s,actualDuration:s.duration,actualSpeed:s.speed,actualIncline:s.incline,actualDistance:'',actualNotes:''}:{...s,actualDuration:s.duration,actualNotes:''})};workoutMain.style.display='none';workoutLogger.style.display='block';renderWorkoutLogger();scrollTo({top:0,behavior:'smooth'})}
 function closeWorkoutLogger(ask=true){if(logDraft&&ask&&!confirm('Close without saving this workout log?'))return;logDraft=null;workoutMain.style.display='block';workoutLogger.style.display='none'}
 function renderWorkoutLogger(){if(!logDraft)return;workoutLogger.innerHTML=`<div class="card logger"><div class="actions"><button class="secondary small" onclick="closeWorkoutLogger()">← Back</button></div><h2>${esc(logDraft.name)}</h2><div class="mini">Log what you actually did — the template steps are fixed.</div><label>Date</label><input type="date" value="${logDraft.date}" onchange="logDraft.date=this.value">${logDraft.steps.map((s,i)=>renderLogStep(s,i)).join('')}<label>Overall workout notes</label><textarea onchange="logDraft.notes=this.value">${esc(logDraft.notes)}</textarea><div class="actions"><button onclick="saveWorkoutLog()">Save gym session</button><button class="secondary" onclick="closeWorkoutLogger()">Cancel</button></div></div>`}
 function renderLogStep(s,i){if(s.type==='strength')return`<div class="step"><div class="stepnum">Step ${i+1}</div><h3>${esc(s.name)}</h3><span class="pill">Strength</span><div class="item-sub">Template: ${s.sets} × ${s.reps}${s.weight!==''?' @ '+s.weight+' kg':''}</div>${exTips(s.exerciseId)?`<div class="item-sub"><b>Form:</b> ${esc(exTips(s.exerciseId))}</div>`:''}<div class="row"><div><label>Sets</label><input type="number" value="${s.actualSets}" onchange="logDraft.steps[${i}].actualSets=this.value"></div><div><label>Reps</label><input type="number" value="${s.actualReps}" onchange="logDraft.steps[${i}].actualReps=this.value"></div><div><label>Weight (kg)</label><input type="number" step=".5" value="${s.actualWeight}" onchange="logDraft.steps[${i}].actualWeight=this.value"></div></div><label>Notes</label><input value="${esc(s.actualNotes)}" onchange="logDraft.steps[${i}].actualNotes=this.value"></div>`;if(s.type==='cardio')return`<div class="step"><div class="stepnum">Step ${i+1}</div><h3>${esc(s.name)}</h3><span class="pill">Treadmill / Cardio</span><div class="row"><div><label>Moving time</label><input value="${esc(s.actualDuration)}" onchange="logDraft.steps[${i}].actualDuration=this.value"></div><div><label>Speed</label><input value="${esc(s.actualSpeed)}" onchange="logDraft.steps[${i}].actualSpeed=this.value"></div><div><label>Incline</label><input value="${esc(s.actualIncline)}" onchange="logDraft.steps[${i}].actualIncline=this.value"></div></div><label>Distance</label><input value="${esc(s.actualDistance)}" onchange="logDraft.steps[${i}].actualDistance=this.value"><label>Notes</label><input value="${esc(s.actualNotes)}" onchange="logDraft.steps[${i}].actualNotes=this.value"></div>`;return`<div class="step"><div class="stepnum">Step ${i+1}</div><h3>${esc(s.name)}</h3><span class="pill">Warm-up / Stretching</span>${s.notes?`<div class="item-sub">${esc(s.notes)}</div>`:''}<label>Approx. time</label><input value="${esc(s.actualDuration)}" onchange="logDraft.steps[${i}].actualDuration=this.value"><label>Notes</label><textarea onchange="logDraft.steps[${i}].actualNotes=this.value">${esc(s.actualNotes)}</textarea></div>`}
 function saveWorkoutLog(){workouts.unshift({...logDraft,savedAt:new Date().toISOString()});save();closeWorkoutLogger(false);renderAll()}
-function renderWorkoutHistory(){workoutHistory.innerHTML=workouts.length?workouts.slice(0,30).map(w=>`<div class="item"><div class="item-title">${esc(w.name)}</div><div class="item-sub">${w.date} · ${(w.steps||w.items||[]).length} steps</div></div>`).join(''):'<div class="empty">No gym sessions logged yet.</div>'}
+function deleteWorkout(id){
+ if(!confirm('Remove this workout from your history?'))return;
+ workouts=workouts.filter(w=>w.id!==id);
+ save();renderAll();
+}
+function renderWorkoutHistory(){
+ workoutHistory.innerHTML=workouts.length?workouts.slice(0,30).map(w=>`
+ <div class="item">
+   <div class="item-title">${esc(w.name)}</div>
+   <div class="item-sub">${w.date} · ${(w.steps||w.items||[]).length} steps</div>
+   <div class="actions"><button class="danger small" onclick="deleteWorkout('${w.id}')">Delete</button></div>
+ </div>`).join(''):'<div class="empty">No gym sessions logged yet.</div>';
+}
 
 function timeToMinutes(v){if(!v)return 0;let p=String(v).trim().split(':').map(Number);if(p.some(Number.isNaN))return 0;if(p.length===2)return p[0]+p[1]/60;if(p.length===3)return p[0]*60+p[1]+p[2]/60;return Number(v)||0}
 function paceText(m){if(!m)return'';let a=Math.floor(m),s=Math.round((m-a)*60);if(s===60){a++;s=0}return a+':'+String(s).padStart(2,'0')}
